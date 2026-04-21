@@ -8,6 +8,7 @@ import {
   SettingOutlined,
   UserOutlined,
   BarChartOutlined,
+  WalletOutlined,
 } from '@ant-design/icons';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -68,6 +69,11 @@ export default function SaaSLayout({
       icon: <SettingOutlined />,
       label: <Link href="#">Settings</Link>,
     },
+    {
+      key: '/billing',
+      icon: <WalletOutlined />,
+      label: <Link href="/billing">Billing</Link>,
+    },
   ];
 
   const userMenu = {
@@ -78,7 +84,7 @@ export default function SaaSLayout({
       },
       {
         key: '2',
-        label: 'Billing',
+        label: <Link href="/billing">Billing</Link>,
       },
       {
         type: 'divider',
@@ -95,6 +101,7 @@ export default function SaaSLayout({
     switch(pathname) {
       case '/dashboard': return 'Dashboard Overview';
       case '/studio': return 'AI Video Studio';
+      case '/billing': return 'Billing & Subscription';
       default: return 'Overview';
     }
   }
