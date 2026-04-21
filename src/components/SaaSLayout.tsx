@@ -9,6 +9,7 @@ import {
   UserOutlined,
   BarChartOutlined,
   WalletOutlined,
+  HistoryOutlined,
 } from '@ant-design/icons';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -70,6 +71,11 @@ export default function SaaSLayout({
       label: <Link href="#">Settings</Link>,
     },
     {
+      key: '/history',
+      icon: <HistoryOutlined />,
+      label: <Link href="/history">History</Link>,
+    },
+    {
       key: '/billing',
       icon: <WalletOutlined />,
       label: <Link href="/billing">Billing</Link>,
@@ -102,6 +108,7 @@ export default function SaaSLayout({
       case '/dashboard': return 'Dashboard Overview';
       case '/studio': return 'AI Video Studio';
       case '/billing': return 'Billing & Subscription';
+      case '/history': return 'Generation History';
       default: return 'Overview';
     }
   }
