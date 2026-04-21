@@ -19,7 +19,10 @@ import {
   DownloadOutlined, 
   ThunderboltFilled,
   SafetyCertificateFilled,
-  WarningOutlined
+  WarningOutlined,
+  LockOutlined,
+  SafetyOutlined,
+  GlobalOutlined
 } from '@ant-design/icons';
 
 const { Title, Text, Paragraph } = Typography;
@@ -184,6 +187,29 @@ export default function BillingPage() {
             </Col>
           ))}
         </Row>
+
+        {/* Midtrans Security Trust Banner */}
+        <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4 py-4 px-6 bg-slate-50 border border-slate-200 rounded-2xl">
+          <div className="flex items-center gap-2 text-slate-500">
+            <LockOutlined className="text-emerald-500 text-lg" />
+            <span className="text-sm font-medium">256-bit SSL Encryption</span>
+          </div>
+          <div className="hidden sm:block w-px h-5 bg-slate-300" />
+          <div className="flex items-center gap-2">
+            <SafetyOutlined className="text-blue-500 text-lg" />
+            <span className="text-sm font-medium text-slate-500">PCI-DSS Compliant</span>
+          </div>
+          <div className="hidden sm:block w-px h-5 bg-slate-300" />
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-slate-400 font-medium">Payments secured by</span>
+            <span className="text-base font-extrabold tracking-tight text-[#003DA5]">midtrans</span>
+          </div>
+          <div className="hidden sm:block w-px h-5 bg-slate-300" />
+          <div className="flex items-center gap-2 text-slate-500">
+            <GlobalOutlined className="text-indigo-400 text-lg" />
+            <span className="text-sm font-medium">Bank Indonesia Licensed</span>
+          </div>
+        </div>
       </section>
 
       {/* SECTION: Payment & History Inline */}
@@ -222,8 +248,13 @@ export default function BillingPage() {
                  </div>
                </div>
             </Card>
-            <div className="mt-4">
+            <div className="mt-4 flex flex-col gap-3">
               <Button block className="border-slate-300 text-slate-700 font-medium">Update Payment Method</Button>
+              <div className="flex items-center justify-center gap-2 py-2 px-4 rounded-xl bg-slate-50 border border-slate-100">
+                <LockOutlined className="text-emerald-500" />
+                <span className="text-xs text-slate-500">Secured by </span>
+                <span className="text-sm font-extrabold tracking-tight text-[#003DA5]">midtrans</span>
+              </div>
             </div>
          </div>
 

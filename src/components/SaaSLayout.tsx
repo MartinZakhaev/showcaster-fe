@@ -139,6 +139,15 @@ export default function SaaSLayout({
             items={menuItems} 
             className="mt-4 border-r-0 font-medium"
           />
+
+          {/* Copyright Footer */}
+          {!collapsed && (
+            <div className="absolute bottom-10 left-0 right-0 px-5 py-4 border-t border-slate-100">
+              <p className="text-[11px] text-slate-400 m-0 leading-relaxed text-center">
+                © {new Date().getFullYear()} Terra. All rights reserved.
+              </p>
+            </div>
+          )}
         </Sider>
         <Layout>
           <Header className="flex items-center justify-between px-8 bg-white border-b border-[#E2E8F0] sticky top-0 z-50">
