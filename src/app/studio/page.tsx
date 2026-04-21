@@ -299,17 +299,17 @@ export default function StudioPage() {
                              {/* Video Placeholder Area */}
                              <div className="absolute inset-0 flex items-center justify-center">
                                {isWaiting ? (
-                                  <VideoCameraAddOutlined className="text-4xl text-slate-700 opacity-50" />
+                                  <VideoCameraAddOutlined className="text-4xl text-slate-500 opacity-50" style={{ color: '#64748b' }} />
                                ) : isActive ? (
                                   <div className="flex flex-col items-center">
-                                     <SyncOutlined spin className="text-4xl text-indigo-500 mb-4 drop-shadow-[0_0_8px_rgba(79,70,229,0.8)]" />
-                                     <Text className="text-indigo-400 font-medium tracking-wider text-sm animate-pulse">Rendering Layer...</Text>
+                                     <SyncOutlined spin className="text-4xl text-indigo-400 mb-4 drop-shadow-[0_0_8px_rgba(79,70,229,0.8)]" style={{ color: '#818cf8' }} />
+                                     <span className="text-indigo-300 font-medium tracking-wider text-sm animate-pulse">Rendering Layer...</span>
                                   </div>
                                ) : (
                                  <div className="group w-full h-full relative cursor-pointer">
                                     <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-80 group-hover:opacity-60 transition-opacity"></div>
                                     <div className="absolute inset-0 flex items-center justify-center">
-                                      <PlayCircleOutlined className="text-6xl text-white opacity-90 group-hover:scale-110 drop-shadow-xl transition-all" />
+                                      <PlayCircleOutlined className="text-6xl text-white opacity-90 group-hover:scale-110 drop-shadow-xl transition-all" style={{ color: '#ffffff' }} />
                                     </div>
                                     <div className="absolute top-4 right-4 bg-indigo-600 px-2 py-1 rounded text-white text-[10px] font-bold tracking-widest uppercase">
                                        Done
@@ -319,19 +319,19 @@ export default function StudioPage() {
                              </div>
 
                              {/* Bottom HUD Data Overlay */}
-                             <div className="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-slate-900 to-transparent flex justify-between items-end">
-                                <div>
-                                   <Title level={5} className="text-white m-0 tracking-tight flex items-center gap-2">
+                             <div className="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-slate-900 via-slate-900/80 to-transparent flex justify-between items-end">
+                                 <div>
+                                   <h5 className="text-white m-0 tracking-tight flex items-center gap-2 font-semibold text-lg drop-shadow-md">
                                      {step.title}
-                                   </Title>
-                                   <Text className="text-slate-400 text-xs">
+                                   </h5>
+                                   <p className="text-slate-300 text-sm mt-1 mb-0 drop-shadow-md font-medium">
                                      {step.description}
-                                   </Text>
-                                </div>
-                                <div className="bg-black/50 backdrop-blur px-2 py-1 rounded font-mono text-slate-300 text-xs">
-                                   {step.duration}
-                                </div>
-                             </div>
+                                   </p>
+                                 </div>
+                                 <div className="bg-black/60 backdrop-blur px-2 py-1 rounded font-mono text-slate-200 text-xs shadow-sm border border-slate-700/50">
+                                    {step.duration}
+                                 </div>
+                              </div>
                           </div>
                        )
                     })}
