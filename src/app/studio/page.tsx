@@ -198,6 +198,46 @@ export default function StudioPage() {
                 />
               </Form.Item>
             </div>
+
+            <Divider className="my-6 border-slate-200" />
+
+            {/* Output Format Section */}
+            <div className="mb-2">
+              <Text className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4 block">3. Output Format</Text>
+              
+              <Form.Item
+                name="videoOrientation"
+                label={<span className="font-medium text-slate-700 text-sm">Orientation</span>}
+                rules={[{ required: true, message: 'Required' }]}
+              >
+                <Select 
+                  placeholder="Select orientation"
+                  options={[
+                    { value: 'portrait', label: 'Portrait (9:16) - TikTok/Reels' },
+                    { value: 'landscape', label: 'Landscape (16:9) - YouTube' },
+                    { value: 'square', label: 'Square (1:1) - Instagram' },
+                  ]}
+                  className="rounded-xl font-medium"
+                />
+              </Form.Item>
+
+              <Form.Item
+                name="resolution"
+                label={<span className="font-medium text-slate-700 text-sm">Resolution</span>}
+                rules={[{ required: true, message: 'Required' }]}
+                className="mb-0"
+              >
+                <Select 
+                  placeholder="Select resolution"
+                  options={[
+                    { value: '720p', label: 'HD 720p (Fast)' },
+                    { value: '1080p', label: 'FHD 1080p (Standard)' },
+                    { value: '4k', label: '4K Ultra HD (Pro/Enterprise only)' },
+                  ]}
+                  className="rounded-xl font-medium"
+                />
+              </Form.Item>
+            </div>
             
             {/* Action Area built into the form to ensure valid submission logic */}
             <div className="sticky bottom-0 -mx-6 -mb-6 p-6 pt-6 bg-[#F8FAFC] border-t border-slate-200 z-10 mt-6">
