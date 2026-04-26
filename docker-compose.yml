@@ -1,0 +1,19 @@
+services:
+  showcaster-fe:
+    image: showcaster-fe:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "${PORT:-3003}:${PORT:-3003}"
+    environment:
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
+      - PORT=${PORT:-3003}
+      - HOSTNAME=0.0.0.0
+    networks:
+      - dokploy-network
+
+networks:
+  dokploy-network:
+    external: true
