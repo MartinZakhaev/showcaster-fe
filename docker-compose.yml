@@ -13,7 +13,3 @@ services:
       - HOSTNAME=0.0.0.0
     networks:
       - dokploy-network
-
-networks:
-  dokploy-network:
-    external: true
