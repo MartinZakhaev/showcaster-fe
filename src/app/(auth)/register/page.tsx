@@ -4,29 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import GoogleSSOButton from "@/components/auth/GoogleSSOButton";
-
-function getPasswordStrength(password: string): {
-  score: number;
-  label: string;
-  color: string;
-} {
-  if (!password) return { score: 0, label: "", color: "" };
-  let score = 0;
-  if (password.length >= 8) score++;
-  if (/[A-Z]/.test(password)) score++;
-  if (/[0-9]/.test(password)) score++;
-  if (/[^a-zA-Z0-9]/.test(password)) score++;
-  if (password.length >= 14) score++;
-
-  const levels = [
-    { score: 1, label: "Very weak", color: "#EF4444" },
-    { score: 2, label: "Weak", color: "#F97316" },
-    { score: 3, label: "Fair", color: "#F59E0B" },
-    { score: 4, label: "Strong", color: "#10B981" },
-    { score: 5, label: "Very strong", color: "#059669" },
-  ];
-  return levels[Math.min(score - 1, 4)] ?? { score: 0, label: "", color: "" };
-}
+import { getPasswordStrength } from "@/utils/auth/passwordStrength";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -111,8 +89,8 @@ export default function RegisterPage() {
         {error && (
           <div className="auth-error" role="alert">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <circle cx="8" cy="8" r="7" stroke="#EF4444" strokeWidth="1.5"/>
-              <path d="M8 5v3M8 11h.01" stroke="#EF4444" strokeWidth="1.5" strokeLinecap="round"/>
+              <circle cx="8" cy="8" r="7" stroke="#DC2626" strokeWidth="1.5"/>
+              <path d="M8 5v3M8 11h.01" stroke="#DC2626" strokeWidth="1.5" strokeLinecap="round"/>
             </svg>
             {error}
           </div>

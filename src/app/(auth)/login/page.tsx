@@ -71,8 +71,8 @@ export default function LoginPage() {
         {error && (
           <div className="auth-error" role="alert">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <circle cx="8" cy="8" r="7" stroke="#EF4444" strokeWidth="1.5"/>
-              <path d="M8 5v3M8 11h.01" stroke="#EF4444" strokeWidth="1.5" strokeLinecap="round"/>
+              <circle cx="8" cy="8" r="7" stroke="#DC2626" strokeWidth="1.5"/>
+              <path d="M8 5v3M8 11h.01" stroke="#DC2626" strokeWidth="1.5" strokeLinecap="round"/>
             </svg>
             {error}
           </div>

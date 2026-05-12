@@ -15,7 +15,8 @@
   --auth-slate-700: #334155;
   --auth-slate-800: #1E293B;
   --auth-slate-900: #0F172A;
-  --auth-error: #EF4444;
+  --auth-card-bg: #FFFFFF;
+  --auth-error: #DC2626;
   --auth-success: #10B981;
   --auth-radius: 12px;
   --auth-transition: 0.2s ease;
@@ -329,7 +330,7 @@ body {
   align-items: center;
   gap: 8px;
   padding: 12px 14px;
-  background: #FEF2F2;
+  background: #FEF7F7;
   border: 1px solid #FECACA;
   border-radius: 10px;
   color: var(--auth-error);
@@ -341,8 +342,8 @@ body {
 
 @keyframes auth-shake {
   0%, 100% { transform: translateX(0); }
-  20% { transform: translateX(-5px); }
-  60% { transform: translateX(5px); }
+  20% { transform: translateX(-4px); }
+  60% { transform: translateX(4px); }
 }
 
 /* ══════════════════════════════════════════════
@@ -441,7 +442,7 @@ body {
 
 .auth-input--error {
   border-color: var(--auth-error) !important;
-  box-shadow: 0 0 0 3px rgba(239,68,68,0.1) !important;
+  box-shadow: 0 0 0 3px rgba(220,38,38,0.1) !important;
 }
 
 .auth-input--success {
@@ -645,8 +646,8 @@ body {
 
 .otp-digit--error {
   border-color: var(--auth-error) !important;
-  background: #FEF2F2 !important;
-  box-shadow: 0 0 0 3px rgba(239,68,68,0.1) !important;
+  background: #FEF7F7 !important;
+  box-shadow: 0 0 0 3px rgba(220,38,38,0.1) !important;
   animation: auth-shake 0.35s ease;
   transform: none !important;
 }
@@ -714,12 +715,17 @@ body {
   }
 
   .auth-form-panel {
+    width: 100%;
     padding: 24px 16px;
     background: var(--auth-slate-50);
   }
 
+  .auth-card-wrapper {
+    max-width: none;
+  }
+
   .auth-card {
-    padding: 32px 24px 28px;
+    padding: 24px 32px 28px;
     border-radius: 16px;
   }
 
@@ -727,9 +733,87 @@ body {
     display: flex;
   }
 
+  .auth-card-title {
+    font-size: 22px;
+  }
+
+  .auth-card-subtitle {
+    font-size: 13.5px;
+  }
+
+  .otp-input-row {
+    gap: 8px;
+  }
+
   .otp-digit {
     width: 44px;
     height: 52px;
     font-size: 20px;
+  }
+}
+
+/* ══════════════════════════════════════════════
+   REDUCED MOTION — Accessibility
+══════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  .auth-brand-bg {
+    animation: none;
+  }
+
+  .auth-submit-btn:hover:not(:disabled) {
+    transform: none;
+  }
+
+  .auth-submit-btn:active:not(:disabled) {
+    transform: none;
+  }
+
+  .auth-error {
+    animation: none;
+  }
+
+  .otp-digit--error {
+    animation: none;
+  }
+
+  .otp-icon--success {
+    animation: none;
+  }
+
+  .auth-input {
+    transition: none;
+  }
+
+  .auth-submit-btn {
+    transition: none;
+  }
+
+  .google-sso-btn {
+    transition: none;
+  }
+
+  .auth-forgot-link {
+    transition: none;
+  }
+
+  .auth-footer-link {
+    transition: none;
+  }
+
+  .auth-input-action {
+    transition: none;
+  }
+
+  .otp-digit {
+    transition: none;
+  }
+
+  .otp-icon {
+    transition: none;
+  }
+
+  .otp-digit--filled {
+    transform: none;
   }
 }

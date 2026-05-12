@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { isValidOTPDigit, extractOTPFromPaste } from "@/utils/auth/otpValidation";
 
 export default function VerifyOTPPage() {
   const router = useRouter();
@@ -36,8 +37,9 @@ export default function VerifyOTPPage() {
   }, [otp]);
 
   const handleChange = (index: number, value: string) => {
-    // Only allow single digit
-    const digit = value.replace(/[^0-9]/g, "").slice(-1);
+    // Only allow single digit using utility
+    const lastChar = value.slice(-1);
+    const digit = isValidOTPDigit(lastChar) ? lastChar : "";
     setError(null);
     const next = [...otp];
     next[index] = digit;
@@ -65,9 +67,10 @@ export default function VerifyOTPPage() {
 
   const handlePaste = (e: React.ClipboardEvent) => {
     e.preventDefault();
-    const pasted = e.clipboardData.getData("text").replace(/[^0-9]/g, "").slice(0, OTP_LENGTH);
-    if (pasted.length === OTP_LENGTH) {
-      setOtp(pasted.split(""));
+    const pasted = e.clipboardData.getData("text");
+    const extracted = extractOTPFromPaste(pasted);
+    if (extracted) {
+      setOtp(extracted.split(""));
     }
   };
 
@@ -154,8 +157,8 @@ export default function VerifyOTPPage() {
             {error && (
               <div className="auth-error" role="alert">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                  <circle cx="8" cy="8" r="7" stroke="#EF4444" strokeWidth="1.5"/>
-                  <path d="M8 5v3M8 11h.01" stroke="#EF4444" strokeWidth="1.5" strokeLinecap="round"/>
+                  <circle cx="8" cy="8" r="7" stroke="#DC2626" strokeWidth="1.5"/>
+                  <path d="M8 5v3M8 11h.01" stroke="#DC2626" strokeWidth="1.5" strokeLinecap="round"/>
                 </svg>
                 {error}
               </div>
