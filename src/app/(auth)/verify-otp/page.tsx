@@ -4,9 +4,13 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { isValidOTPDigit, extractOTPFromPaste } from "@/utils/auth/otpValidation";
+import { apiVerifyOTP, apiResendOTP, ApiError } from "@/lib/api";
+import { useAuth } from "@/lib/AuthContext";
+import GuestGuard from "@/components/GuestGuard";
 
 export default function VerifyOTPPage() {
   const router = useRouter();
+  const { pendingEmail, setPendingEmail, login } = useAuth();
   const OTP_LENGTH = 6;
   const RESEND_COOLDOWN = 60;
 
@@ -76,23 +80,23 @@ export default function VerifyOTPPage() {
 
   const handleVerify = async (code: string) => {
     if (loading || success) return;
+    if (!pendingEmail) {
+      setError("Session expired. Please register again.");
+      return;
+    }
     setLoading(true);
     setError(null);
 
     try {
-      // TODO: Replace with real API — POST /api/auth/verify-otp
-      await new Promise((r) => setTimeout(r, 1200));
-
-      // Mock: treat "000000" as invalid for UX demo
-      if (code === "000000") {
-        throw new Error("Invalid code");
-      }
-
+      const data = await apiVerifyOTP({ email: pendingEmail, otp: code });
+      login(data.token);
+      setPendingEmail(null);
       setSuccess(true);
-      await new Promise((r) => setTimeout(r, 1000));
+      await new Promise((r) => setTimeout(r, 800));
       router.push("/dashboard");
-    } catch {
-      setError("Incorrect code. Please check and try again.");
+    } catch (err) {
+      const msg = err instanceof ApiError ? err.message : "Incorrect code. Please check and try again.";
+      setError(msg);
       setOtp(Array(OTP_LENGTH).fill(""));
       document.getElementById("otp-0")?.focus();
     } finally {
@@ -101,19 +105,24 @@ export default function VerifyOTPPage() {
   };
 
   const handleResend = async () => {
-    if (!canResend || resending) return;
+    if (!canResend || resending || !pendingEmail) return;
     setResending(true);
-    // TODO: Replace with real API — POST /api/auth/resend-otp
-    await new Promise((r) => setTimeout(r, 800));
-    setResending(false);
-    setCanResend(false);
-    setCountdown(RESEND_COOLDOWN);
-    setOtp(Array(OTP_LENGTH).fill(""));
-    setError(null);
-    document.getElementById("otp-0")?.focus();
+    try {
+      await apiResendOTP(pendingEmail);
+    } catch {
+      // silently ignore — the user can try again
+    } finally {
+      setResending(false);
+      setCanResend(false);
+      setCountdown(RESEND_COOLDOWN);
+      setOtp(Array(OTP_LENGTH).fill(""));
+      setError(null);
+      document.getElementById("otp-0")?.focus();
+    }
   };
 
   return (
+    <GuestGuard>
     <div className="auth-card-wrapper">
       <div className="auth-card">
         {/* Header */}
@@ -229,5 +238,6 @@ export default function VerifyOTPPage() {
         </p>
       </div>
     </div>
+    </GuestGuard>
   );
 }

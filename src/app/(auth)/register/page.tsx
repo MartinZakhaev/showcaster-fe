@@ -5,9 +5,13 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import GoogleSSOButton from "@/components/auth/GoogleSSOButton";
 import { getPasswordStrength } from "@/utils/auth/passwordStrength";
+import { apiRegister, ApiError } from "@/lib/api";
+import { useAuth } from "@/lib/AuthContext";
+import GuestGuard from "@/components/GuestGuard";
 
 export default function RegisterPage() {
   const router = useRouter();
+  const { setPendingEmail } = useAuth();
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -44,11 +48,15 @@ export default function RegisterPage() {
 
     setLoading(true);
     try {
-      // TODO: Replace with real API — POST /api/auth/register
-      await new Promise((r) => setTimeout(r, 1200));
+      await apiRegister({ email, fullName, password });
+      setPendingEmail(email);
       router.push("/verify-otp");
-    } catch {
-      setError("Something went wrong. Please try again.");
+    } catch (err) {
+      if (err instanceof ApiError) {
+        setError(err.message);
+      } else {
+        setError("Something went wrong. Please try again.");
+      }
     } finally {
       setLoading(false);
     }
@@ -61,6 +69,7 @@ export default function RegisterPage() {
   };
 
   return (
+    <GuestGuard>
     <div className="auth-card-wrapper">
       <div className="auth-card">
         {/* Header */}
@@ -289,5 +298,6 @@ export default function RegisterPage() {
         </p>
       </div>
     </div>
+    </GuestGuard>
   );
 }

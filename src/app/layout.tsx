@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { AntdRegistry } from '@ant-design/nextjs-registry';
+import { AuthProvider } from "@/lib/AuthContext";
+import AntdAppProvider from "@/lib/AntdAppProvider";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -29,7 +31,7 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <AntdRegistry>{children}</AntdRegistry>
+        <AntdRegistry><AntdAppProvider><AuthProvider>{children}</AuthProvider></AntdAppProvider></AntdRegistry>
       </body>
     </html>
   );

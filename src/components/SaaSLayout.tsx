@@ -10,9 +10,11 @@ import {
   BarChartOutlined,
   WalletOutlined,
   HistoryOutlined,
+  LogoutOutlined,
 } from '@ant-design/icons';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { useAuth } from '@/lib/AuthContext';
 
 const { Header, Sider, Content } = Layout;
 
@@ -23,6 +25,8 @@ export default function SaaSLayout({
 }) {
   const [collapsed, setCollapsed] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
+  const { logout } = useAuth();
 
   // Enterprise color palette
   const enterpriseTheme = {
@@ -84,21 +88,15 @@ export default function SaaSLayout({
 
   const userMenu = {
     items: [
-      {
-        key: '1',
-        label: 'Profile',
-      },
-      {
-        key: '2',
-        label: <Link href="/billing">Billing</Link>,
-      },
-      {
-        type: 'divider',
-      },
+      { key: '1', label: 'Profile' },
+      { key: '2', label: <Link href="/billing">Billing</Link> },
+      { type: 'divider' as const },
       {
         key: '3',
         label: 'Log out',
+        icon: <LogoutOutlined />,
         danger: true,
+        onClick: () => { logout(); router.push('/login'); },
       },
     ],
   };

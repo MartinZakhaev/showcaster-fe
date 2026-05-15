@@ -4,9 +4,13 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import GoogleSSOButton from "@/components/auth/GoogleSSOButton";
+import { apiLogin, ApiError } from "@/lib/api";
+import { useAuth } from "@/lib/AuthContext";
+import GuestGuard from "@/components/GuestGuard";
 
 export default function LoginPage() {
   const router = useRouter();
+  const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
@@ -26,11 +30,15 @@ export default function LoginPage() {
 
     setLoading(true);
     try {
-      // TODO: Replace with real API call — POST /api/auth/login
-      await new Promise((r) => setTimeout(r, 1200));
+      const data = await apiLogin({ email, password });
+      login(data.token);
       router.push("/dashboard");
-    } catch {
-      setError("Invalid email or password. Please try again.");
+    } catch (err) {
+      if (err instanceof ApiError) {
+        setError(err.message);
+      } else {
+        setError("Something went wrong. Please try again.");
+      }
     } finally {
       setLoading(false);
     }
@@ -43,6 +51,7 @@ export default function LoginPage() {
   };
 
   return (
+    <GuestGuard>
     <div className="auth-card-wrapper">
       <div className="auth-card">
         {/* Header */}
@@ -180,5 +189,6 @@ export default function LoginPage() {
         </p>
       </div>
     </div>
+    </GuestGuard>
   );
 }
